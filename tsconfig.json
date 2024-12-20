@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "resolveJsonModule": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "target": "ES2022",
+    "allowSyntheticDefaultImports": true,
+    "types": ["./dist/vitest-218/index.d.ts"]
+  },
+  "include": ["src", "demo.ts"]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "vitest-types",
+  "version": "0.0.0-PLACEHOLDER",
+  "type": "module",
+  "exports": {
+    "./vitest-218": {
+      "types": "./dist/vitest-218/index.d.ts"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "bun build.ts",
+    "prepare": "pnpm --package husky@9.1.1 dlx husky",
+    "prepack": "pnpm build",
+    "deploy": "npm pack"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@microsoft/api-extractor": "^7.48.1",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.10.2",
+    "lodash-es": "^4.17.21",
+    "vitest218": "npm:vitest@2.1.8"
+  },
+  "nano-staged": {
+    "*.{js,ts,cts,mts}": "biome check --write --diagnostic-level=error --no-errors-on-unmatched"
+  },
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
+}
