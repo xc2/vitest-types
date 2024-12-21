@@ -1,0 +1,70 @@
+diff --git a/lib/analyzer/AstSymbolTable.js b/lib/analyzer/AstSymbolTable.js
+index 937231313ecad748e4e2019a8e266c30d9d7beb5..410af782164b0bc1f40a89d6cd0595b1a40f654f 100644
+--- a/lib/analyzer/AstSymbolTable.js
++++ b/lib/analyzer/AstSymbolTable.js
+@@ -123,13 +123,16 @@ class AstSymbolTable {
+      */
+     // NOTE: This could be a method of AstSymbol if it had a backpointer to its AstSymbolTable.
+     getChildAstDeclarationByNode(node, parentAstDeclaration) {
++        const childAstDeclarations = this._astDeclarationsByDeclaration.get(node);
+         if (!parentAstDeclaration.astSymbol.analyzed) {
+-            throw new Error('getChildDeclarationByNode() cannot be used for an AstSymbol that was not analyzed');
++            console.warn('getChildDeclarationByNode() called for an AstSymbol that was not analyzed:');
++            console.warn(parentAstDeclaration.declaration.getText())
++            // throw new Error('getChildDeclarationByNode() cannot be used for an AstSymbol that was not analyzed');
+         }
+-        const childAstDeclaration = this._astDeclarationsByDeclaration.get(node);
+-        if (!childAstDeclaration) {
++        if (!childAstDeclarations) {
+             throw new Error('Child declaration not found for the specified node');
+         }
++        const childAstDeclaration = Array.from(childAstDeclarations).find((x) => x.parent === parentAstDeclaration);
+         if (childAstDeclaration.parent !== parentAstDeclaration) {
+             throw new node_core_library_1.InternalError('The found child is not attached to the parent AstDeclaration');
+         }
+@@ -372,9 +375,11 @@ class AstSymbolTable {
+                 break;
+         }
+         // Is this node declaring a new AstSymbol?
+-        const newGoverningAstDeclaration = this._fetchAstDeclaration(node, governingAstDeclaration.astSymbol.isExternal);
++        const newGoverningAstDeclaration = this._fetchAstDeclaration(node, governingAstDeclaration.astSymbol.isExternal) ?? [governingAstDeclaration];
+         for (const childNode of node.getChildren()) {
+-            this._analyzeChildTree(childNode, newGoverningAstDeclaration || governingAstDeclaration);
++            for (const d of newGoverningAstDeclaration) {
++                this._analyzeChildTree(childNode, d);
++            }
+         }
+     }
+     _fetchEntityForNode(node, governingAstDeclaration) {
+@@ -425,7 +430,7 @@ class AstSymbolTable {
+             return undefined;
+         }
+         if (followedSymbol.flags &
+-            (ts.SymbolFlags.TypeParameter | ts.SymbolFlags.TypeLiteral | ts.SymbolFlags.Transient)) {
++            (ts.SymbolFlags.TypeParameter | ts.SymbolFlags.TypeLiteral/* | ts.SymbolFlags.Transient*/)) {
+             if (!TypeScriptInternals_1.TypeScriptInternals.isLateBoundSymbol(followedSymbol)) {
+                 return undefined;
+             }
+@@ -518,12 +523,16 @@ class AstSymbolTable {
+                         throw new node_core_library_1.InternalError('Missing parent AstDeclaration');
+                     }
+                 }
+-                const astDeclaration = new AstDeclaration_1.AstDeclaration({
+-                    declaration,
+-                    astSymbol,
+-                    parent: parentAstDeclaration
+-                });
+-                this._astDeclarationsByDeclaration.set(declaration, astDeclaration);
++                for (const parent of parentAstDeclaration ?? [undefined]) {
++                    const astDeclaration = new AstDeclaration_1.AstDeclaration({
++                        declaration,
++                        astSymbol,
++                        parent
++                    });
++                    const astDeclarations = this._astDeclarationsByDeclaration.get(declaration) ?? new Set();
++                    astDeclarations.add(astDeclaration);
++                    this._astDeclarationsByDeclaration.set(declaration, astDeclarations);
++                }
+             }
+         }
+         if (options.isExternal !== astSymbol.isExternal) {

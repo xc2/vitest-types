@@ -1,4 +1,4 @@
-import { writeFileSync } from "node:fs";
+import * as Path from "node:path";
 import {
   Extractor,
   ExtractorConfig,
@@ -8,46 +8,98 @@ import {
   type IExtractorMessagesConfig,
 } from "@microsoft/api-extractor";
 import { cloneDeep, defaultsDeep } from "lodash-es";
-
-const projectFolder = new URL("./", import.meta.url).pathname;
-
-const config = getConfig({
-  projectFolder,
-  mainEntryPointFilePath: "<projectFolder>/src/vitest-218.d.ts",
-
-  bundledPackages: ["vitest", "@vitest/runner", "@vitest/utils", "@vitest/expect"],
-  dtsRollup: { enabled: true, untrimmedFilePath: "<projectFolder>/dist/vitest-218/types.d.ts" },
+// const externals = {
+//   "@vitest/expect": ["ExpectStatic"],
+//   "@vitest/pretty-format": ["CompareKeys", "PrettyFormatOptions"],
+//   "@vitest/runner": [
+//     "afterAll",
+//     "afterEach",
+//     "beforeAll",
+//     "describe",
+//     "it",
+//     "onTestFailed",
+//     "onTestFinished",
+//     "suite",
+//     "test",
+//   ],
+//   "@vitest/utils": ["Constructable", "stringify"],
+//   "@vitest/utils/diff": ["diff"],
+//   tinyrainbow: ["Formatter"],
+// };
+// let externalsDTS = ``;
+// for (const [key, value] of Object.entries(externals)) {
+//   externalsDTS += `export { ${value.join(", ")} } from "${key}";\n`;
+// }
+//
+// writeFileSync(new URL("./src/2/externals.d.ts", import.meta.url).pathname, externalsDTS);
+// bundle({
+//   entry: "src/2/externals.d.ts",
+//   output: "dist/2/externals.d.ts",
+//   bundledPackages: [
+//     "@vitest/expect",
+//     "@vitest/runner",
+//     "@vitest/utils",
+//     "tinyrainbow",
+//     "@vitest/pretty-format",
+//   ],
+// });
+bundle({
+  entry: "./src/2/vitest.d.ts",
+  output: "./dist/2/vitest.d.ts",
+  bundledPackages: [
+    "chai",
+    "vitest",
+    "@vitest/expect",
+    "@vitest/runner",
+    "@vitest/utils",
+    "tinyrainbow",
+    "@vitest/pretty-format",
+  ],
 });
 
-// Load and parse the api-extractor.json file
-const extractorConfig: ExtractorConfig = ExtractorConfig.prepare({
-  configObject: config,
-  configObjectFullPath: new URL("./fake.json", import.meta.url).pathname,
-  packageJsonFullPath: new URL("./package.json", import.meta.url).pathname,
-});
+function bundle(options: { entry: string; bundledPackages?: string[]; output: string }) {
+  const projectFolder = new URL("./", import.meta.url).pathname;
 
-// Invoke API Extractor
-const extractorResult: ExtractorResult = Extractor.invoke(extractorConfig, {
-  localBuild: true,
-});
+  const config = getConfig({
+    projectFolder,
+    mainEntryPointFilePath: Path.join("<projectFolder>", options.entry),
 
-if (extractorResult.succeeded) {
-  console.log(`API Extractor completed successfully`);
-  writeFileSync(
-    new URL("./dist/vitest-218/index.d.ts", import.meta.url).pathname,
-    `
-declare module "vitest-demo" {
-  export * from "vitest-types/vitest-218/types"
-}
-    `
-  );
-  process.exitCode = 0;
-} else {
-  console.error(
-    `API Extractor completed with ${extractorResult.errorCount} errors` +
-      ` and ${extractorResult.warningCount} warnings`
-  );
-  process.exitCode = 1;
+    bundledPackages: [...(options.bundledPackages ?? [])],
+    dtsRollup: {
+      enabled: true,
+      untrimmedFilePath: Path.join("<projectFolder>", options.output),
+    },
+  });
+
+  // Load and parse the api-extractor.json file
+  const extractorConfig: ExtractorConfig = ExtractorConfig.prepare({
+    configObject: config,
+    configObjectFullPath: new URL("./fake.json", import.meta.url).pathname,
+    packageJsonFullPath: new URL("./package.json", import.meta.url).pathname,
+  });
+
+  // Invoke API Extractor
+  const extractorResult: ExtractorResult = Extractor.invoke(extractorConfig, {
+    localBuild: true,
+  });
+
+  if (extractorResult.succeeded) {
+    console.log(`API Extractor completed successfully`);
+    //     writeFileSync(
+    //       new URL("./dist/vitest-218/index.d.ts", import.meta.url).pathname,
+    //       `
+    // declare module "vitest-demo" {
+    //   export * from "vitest-types/vitest-218/types"
+    // }
+    //     `
+    //     );
+  } else {
+    console.error(
+      `API Extractor completed with ${extractorResult.errorCount} errors` +
+        ` and ${extractorResult.warningCount} warnings`
+    );
+  }
+  return extractorResult;
 }
 
 function getConfig(config: IConfigFile) {

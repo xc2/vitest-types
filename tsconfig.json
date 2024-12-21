@@ -9,9 +9,7 @@
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "target": "ES2022",
-    "allowSyntheticDefaultImports": true,
-    "types": ["./dist/vitest-218/index.d.ts"]
+    "target": "ES2022"
   },
-  "include": ["src", "demo.ts"]
+  "include": ["src"]
 }
