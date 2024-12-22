@@ -21,7 +21,7 @@
     "build": "pnpm --package tsx@4.19.2 dlx tsx build.ts",
     "prepare": "pnpm --package husky@9.1.1 dlx husky",
     "prepack": "pnpm build",
-    "deploy": "mv README.md README.md.bak && mv PACKAGE.md README.md && npm pack"
+    "deploy": "mv README.md _readme.bak && mv PACKAGE.md README.md && npm pack"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
