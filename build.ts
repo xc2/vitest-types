@@ -1,3 +1,5 @@
+import { cpSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import * as Path from "node:path";
 import {
   Extractor,
@@ -8,54 +10,64 @@ import {
   type IExtractorMessagesConfig,
 } from "@microsoft/api-extractor";
 import { cloneDeep, defaultsDeep } from "lodash-es";
-// const externals = {
-//   "@vitest/expect": ["ExpectStatic"],
-//   "@vitest/pretty-format": ["CompareKeys", "PrettyFormatOptions"],
-//   "@vitest/runner": [
-//     "afterAll",
-//     "afterEach",
-//     "beforeAll",
-//     "describe",
-//     "it",
-//     "onTestFailed",
-//     "onTestFinished",
-//     "suite",
-//     "test",
-//   ],
-//   "@vitest/utils": ["Constructable", "stringify"],
-//   "@vitest/utils/diff": ["diff"],
-//   tinyrainbow: ["Formatter"],
-// };
-// let externalsDTS = ``;
-// for (const [key, value] of Object.entries(externals)) {
-//   externalsDTS += `export { ${value.join(", ")} } from "${key}";\n`;
-// }
-//
-// writeFileSync(new URL("./src/2/externals.d.ts", import.meta.url).pathname, externalsDTS);
-// bundle({
-//   entry: "src/2/externals.d.ts",
-//   output: "dist/2/externals.d.ts",
-//   bundledPackages: [
-//     "@vitest/expect",
-//     "@vitest/runner",
-//     "@vitest/utils",
-//     "tinyrainbow",
-//     "@vitest/pretty-format",
-//   ],
-// });
+
+const rootRequire = createRequire(import.meta.url);
+const MODULE_NAME_LI = JSON.stringify("vitest");
+
 bundle({
   entry: "./src/2/vitest.d.ts",
   output: "./dist/2/vitest.d.ts",
   bundledPackages: [
-    "chai",
     "vitest",
     "@vitest/expect",
     "@vitest/runner",
     "@vitest/utils",
+    "@vitest/spy",
+    "expect-type",
+    "tinybench",
+    "@vitest/snapshot",
     "tinyrainbow",
     "@vitest/pretty-format",
   ],
 });
+
+cpSync(resolveChai("vitest2"), "./dist/2/chai.d.cts");
+writeFileSync(
+  "./dist/2/globals.d.ts",
+  `
+declare global {
+  const suite: typeof import(${MODULE_NAME_LI})['suite']
+  const test: typeof import(${MODULE_NAME_LI})['test']
+  const describe: typeof import(${MODULE_NAME_LI})['describe']
+  const it: typeof import(${MODULE_NAME_LI})['it']
+  const expectTypeOf: typeof import(${MODULE_NAME_LI})['expectTypeOf']
+  const assertType: typeof import(${MODULE_NAME_LI})['assertType']
+  const expect: typeof import(${MODULE_NAME_LI})['expect']
+  const assert: typeof import(${MODULE_NAME_LI})['assert']
+  const beforeAll: typeof import(${MODULE_NAME_LI})['beforeAll']
+  const afterAll: typeof import(${MODULE_NAME_LI})['afterAll']
+  const beforeEach: typeof import(${MODULE_NAME_LI})['beforeEach']
+  const afterEach: typeof import(${MODULE_NAME_LI})['afterEach']
+  const onTestFailed: typeof import(${MODULE_NAME_LI})['onTestFailed']
+  const onTestFinished: typeof import(${MODULE_NAME_LI})['onTestFinished']
+}
+export {}
+`.trim() + "\n"
+);
+
+writeFileSync(
+  "./dist/2.d.ts",
+  `
+declare module ${MODULE_NAME_LI} {
+  export * from "vitest-types/2/vitest";
+}
+
+`.trim() + ""
+);
+function resolveChai(pkg: string, chaiRequire = "@vitest/expect/dist/chai.d.cts") {
+  const vitestRequire = createRequire(new URL(rootRequire.resolve(pkg), import.meta.url));
+  return vitestRequire.resolve(chaiRequire);
+}
 
 function bundle(options: { entry: string; bundledPackages?: string[]; output: string }) {
   const projectFolder = new URL("./", import.meta.url).pathname;
@@ -85,14 +97,6 @@ function bundle(options: { entry: string; bundledPackages?: string[]; output: st
 
   if (extractorResult.succeeded) {
     console.log(`API Extractor completed successfully`);
-    //     writeFileSync(
-    //       new URL("./dist/vitest-218/index.d.ts", import.meta.url).pathname,
-    //       `
-    // declare module "vitest-demo" {
-    //   export * from "vitest-types/vitest-218/types"
-    // }
-    //     `
-    //     );
   } else {
     console.error(
       `API Extractor completed with ${extractorResult.errorCount} errors` +

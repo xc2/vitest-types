@@ -1,17 +1,22 @@
 {
   "name": "vitest-types",
   "version": "0.0.0-PLACEHOLDER",
-  "type": "module",
+  "types": "./dist/2.d.ts",
   "exports": {
-    "./vitest-218": {
-      "types": "./dist/vitest-218/index.d.ts"
+    ".": {
+      "types": "./dist/2.d.ts"
+    },
+    "./globals": {
+      "types": "./dist/2/globals.d.ts"
     },
     "./*": {
       "types": "./dist/*.d.ts"
-    }
+    },
+    "./package.json": "./package.json"
   },
+  "files": ["dist"],
   "scripts": {
-    "build": "bun build.ts",
+    "build": "pnpm --package tsx@4.19.2 dlx tsx build.ts",
     "prepare": "pnpm --package husky@9.1.1 dlx husky",
     "prepack": "pnpm build",
     "deploy": "npm pack"
@@ -22,7 +27,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.10.2",
     "lodash-es": "^4.17.21",
-    "vitest218": "npm:vitest@2.1.8"
+    "vitest2": "npm:vitest@2.1.8"
   },
   "nano-staged": {
     "*.{js,ts,cts,mts}": "biome check --write --diagnostic-level=error --no-errors-on-unmatched"
@@ -30,7 +35,7 @@
   "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
   "pnpm": {
     "patchedDependencies": {
-      "@microsoft/api-extractor": "patches/@microsoft__api-extractor.patch"
+      "vitest@2.1.8": "patches/vitest@2.1.8.patch"
     }
   }
 }

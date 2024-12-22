@@ -5,9 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  '@microsoft/api-extractor':
-    hash: 7bmubortkn52at2forlfzr6kpq
-    path: patches/@microsoft__api-extractor.patch
+  vitest@2.1.8:
+    hash: 67d4jzrslhi5mqwjnzbuj4bm5q
+    path: patches/vitest@2.1.8.patch
 
 importers:
 
@@ -18,7 +18,7 @@ importers:
         version: 1.9.4
       '@microsoft/api-extractor':
         specifier: ^7.48.1
-        version: 7.48.1(patch_hash=7bmubortkn52at2forlfzr6kpq)(@types/node@22.10.2)
+        version: 7.48.1(@types/node@22.10.2)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -28,9 +28,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      vitest218:
+      vitest2:
         specifier: npm:vitest@2.1.8
-        version: vitest@2.1.8(@types/node@22.10.2)
+        version: vitest@2.1.8(patch_hash=67d4jzrslhi5mqwjnzbuj4bm5q)(@types/node@22.10.2)
 
 packages:
 
@@ -843,7 +843,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@microsoft/api-extractor@7.48.1(patch_hash=7bmubortkn52at2forlfzr6kpq)(@types/node@22.10.2)':
+  '@microsoft/api-extractor@7.48.1(@types/node@22.10.2)':
     dependencies:
       '@microsoft/api-extractor-model': 7.30.1(@types/node@22.10.2)
       '@microsoft/tsdoc': 0.15.1
@@ -1283,7 +1283,7 @@ snapshots:
       '@types/node': 22.10.2
       fsevents: 2.3.3
 
-  vitest@2.1.8(@types/node@22.10.2):
+  vitest@2.1.8(patch_hash=67d4jzrslhi5mqwjnzbuj4bm5q)(@types/node@22.10.2):
     dependencies:
       '@vitest/expect': 2.1.8
       '@vitest/mocker': 2.1.8(vite@5.4.11(@types/node@22.10.2))
