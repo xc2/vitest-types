@@ -2,12 +2,12 @@
 
 This package allows you to use `import { expect, test, ... } from "vitest"` statements in your ts test files without needing to add `vitest` to your `dependencies` or `devDependencies` lists.
 
-## Notes
 
-Vitest Node APIs are not included in this package. You will still need to install `vitest` to use them. For example:
-
-- `vitest/node`
-- `vitest/config`
+> [!NOTE]
+> Vitest Node APIs are not included in this package. You will still need to install `vitest` to use them. For example:
+>
+> - `vitest/node`
+> - `vitest/config`
 
 ## Installation
 
