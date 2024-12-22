@@ -40,17 +40,14 @@
     "rules": {
       "correctness": {
         "useExhaustiveDependencies": "off",
-        "noEmptyPattern": "off",
-        "noUnusedImports": {}
+        "noEmptyPattern": "off"
       },
       "a11y": {
         "useKeyWithClickEvents": "off",
         "useSemanticElements": "off"
       },
       "style": {
-        "recommended": false,
-        "useImportType": {},
-        "useExportType": {}
+        "recommended": false
       },
       "complexity": {
         "noForEach": "warn",

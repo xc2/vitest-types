@@ -1,5 +1,5 @@
 diff --git a/lib/analyzer/AstSymbolTable.js b/lib/analyzer/AstSymbolTable.js
-index 937231313ecad748e4e2019a8e266c30d9d7beb5..410af782164b0bc1f40a89d6cd0595b1a40f654f 100644
+index 937231313ecad748e4e2019a8e266c30d9d7beb5..d9dfb163839b6b50e81150f5ae09b11f6c36e124 100644
 --- a/lib/analyzer/AstSymbolTable.js
 +++ b/lib/analyzer/AstSymbolTable.js
 @@ -123,13 +123,16 @@ class AstSymbolTable {
@@ -27,10 +27,11 @@ index 937231313ecad748e4e2019a8e266c30d9d7beb5..410af782164b0bc1f40a89d6cd0595b1
          }
          // Is this node declaring a new AstSymbol?
 -        const newGoverningAstDeclaration = this._fetchAstDeclaration(node, governingAstDeclaration.astSymbol.isExternal);
-+        const newGoverningAstDeclaration = this._fetchAstDeclaration(node, governingAstDeclaration.astSymbol.isExternal) ?? [governingAstDeclaration];
-         for (const childNode of node.getChildren()) {
+-        for (const childNode of node.getChildren()) {
 -            this._analyzeChildTree(childNode, newGoverningAstDeclaration || governingAstDeclaration);
-+            for (const d of newGoverningAstDeclaration) {
++        const newGoverningAstDeclaration = this._fetchAstDeclaration(node, governingAstDeclaration.astSymbol.isExternal) ?? [governingAstDeclaration];
++        for (const d of newGoverningAstDeclaration) {
++            for (const childNode of node.getChildren()) {
 +                this._analyzeChildTree(childNode, d);
 +            }
          }

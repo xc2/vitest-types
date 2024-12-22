@@ -1,44 +1,68 @@
-export type {
+export {
+  CancelReason,
+  ExtendedContext,
+  OnTestFailedHandler,
+  OnTestFinishedHandler,
+  RunMode,
+  RunnerCustomCase,
+  RunnerTask,
+  RunnerTaskBase,
+  RunnerTaskResult,
+  RunnerTaskResultPack,
+  RunnerTestCase,
+  RunnerTestFile,
+  RunnerTestSuite,
+  SuiteAPI,
+  SuiteCollector,
+  SuiteFactory,
+  TaskContext,
+  TaskCustomOptions,
+  TaskMeta,
+  TaskState,
+  TestAPI,
+  TestContext,
+  TestFunction,
+  TestOptions,
   afterAll,
   afterEach,
   beforeAll,
+  beforeEach,
   describe,
-  expect,
   it,
   onTestFailed,
   onTestFinished,
   suite,
   test,
-} from "vitest218";
-export { TestContext, TaskMeta, File, TaskBase, TaskResult } from "@vitest/runner";
-export { MatcherState, ExpectStatic, Assertion } from "@vitest/expect";
-export { stringify } from "@vitest/utils";
-
-export interface ExpectPollOptions {
-  interval?: number;
-  timeout?: number;
-  message?: string;
-}
-export interface SnapshotMatcher<T> {
-  <
-    U extends {
-      [P in keyof T]: any;
-    },
-  >(
-    snapshot: Partial<U>,
-    message?: string
-  ): void;
-  (message?: string): void;
-}
-export interface InlineSnapshotMatcher<T> {
-  <
-    U extends {
-      [P in keyof T]: any;
-    },
-  >(
-    properties: Partial<U>,
-    snapshot?: string,
-    message?: string
-  ): void;
-  (message?: string): void;
-}
+} from "vitest2";
+export { AfterSuiteRunMeta } from "vitest2";
+export { AsymmetricMatchersContaining, JestAssertion } from "vitest2";
+export {
+  SnapshotData,
+  SnapshotMatchOptions,
+  SnapshotResult,
+  SnapshotSerializer,
+  SnapshotStateOptions,
+  SnapshotSummary,
+  SnapshotUpdateState,
+  UncheckedSnapshot,
+} from "vitest2";
+export { BenchFunction, Benchmark, BenchmarkAPI } from "vitest2";
+export { RuntimeConfig, SerializedCoverageConfig } from "vitest2";
+export {
+  Mock,
+  MockContext,
+  MockInstance,
+  Mocked,
+  MockedClass,
+  MockedFunction,
+  MockedObject,
+} from "vitest2";
+export { bench } from "vitest2";
+export { ExpectTypeOf, expectTypeOf } from "vitest2";
+export { ParsedStack, SerializedError, TestError } from "vitest2";
+export { DiffOptions } from "vitest2";
+export { chai } from "vitest2";
+export { assert, should } from "vitest2";
+export { BenchFactory, BenchOptions, BenchTask, BenchTaskResult } from "vitest2";
+export { expect, Assertion, ExpectStatic, MatcherState } from "vitest2";
+export { assertType } from "vitest2";

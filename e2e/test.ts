@@ -1,5 +1,7 @@
-import { expect, test } from "vitest-demo";
+import { expect, test } from "vitest";
 
 test("test", () => {
   expect("a").toMatchSnapshot();
 });
+
+it("a", () => {});
