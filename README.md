@@ -28,7 +28,7 @@ Then add `vitest-types` to `compilerOptions.types` list in the `tsconfig.json`. 
 Now you can use `import { expect, test, ... } from "vitest"` in your test files.
 
 ```ts
-// a.d.ts
+// a.test.ts
 import { expect, test } from "vitest";
 
 test('foo', () => {
