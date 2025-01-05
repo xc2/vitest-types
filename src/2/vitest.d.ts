@@ -59,7 +59,7 @@ export {
 } from "vitest2";
 export { bench } from "vitest2";
 export { ExpectTypeOf, expectTypeOf } from "vitest2";
-export { ParsedStack, SerializedError, TestError } from "vitest2";
+export { ErrorWithDiff, ParsedStack, SerializedError, TestError } from "vitest2";
 export { DiffOptions } from "vitest2";
 export { chai } from "vitest2";
 export { assert, should } from "vitest2";
@@ -68,3 +68,40 @@ export { expect, Assertion, ExpectStatic, MatcherState } from "vitest2";
 export { assertType } from "vitest2";
 
 export { vi, vitest } from "vitest2";
+
+export {
+  AssertType,
+  BenchmarkResult,
+  BrowserUI,
+  File,
+  ModuleGraphData,
+  ProvidedContext,
+  SerializedConfig,
+  SerializedTestSpecification,
+  TaskBase,
+  TaskResult,
+  TransformResultWithSource,
+  UserConsoleLog,
+  VitestUtils,
+  WebSocketEvents,
+  WebSocketHandlers,
+  WebSocketRPC,
+  createExpect,
+  getRunningMode,
+  inject,
+  isFirstRun,
+  isWatchMode,
+  runOnce,
+} from "vitest2";
+export {
+  TaskResultPack,
+  Suite,
+  Test,
+  Custom,
+  Task,
+  DoneCallback,
+  RuntimeContext,
+  SuiteHooks,
+  SequenceHooks,
+  SequenceSetupFiles,
+} from "vitest2";
