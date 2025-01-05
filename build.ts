@@ -43,6 +43,8 @@ declare global {
   const expectTypeOf: typeof import(${MODULE_NAME_LI})['expectTypeOf']
   const assertType: typeof import(${MODULE_NAME_LI})['assertType']
   const expect: typeof import(${MODULE_NAME_LI})['expect']
+  const vi: typeof import(${MODULE_NAME_LI})['vi']
+  const vitest: typeof import(${MODULE_NAME_LI})['vitest']
   const assert: typeof import(${MODULE_NAME_LI})['assert']
   const beforeAll: typeof import(${MODULE_NAME_LI})['beforeAll']
   const afterAll: typeof import(${MODULE_NAME_LI})['afterAll']

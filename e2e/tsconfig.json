@@ -12,7 +12,5 @@
     "target": "ES2022",
     "types": ["vitest-types/globals", "vitest-types"]
   },
-  "include": [
-    "test.ts"
-  ]
+  "include": ["test.ts"]
 }

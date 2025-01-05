@@ -66,3 +66,5 @@ export { assert, should } from "vitest2";
 export { BenchFactory, BenchOptions, BenchTask, BenchTaskResult } from "vitest2";
 export { expect, Assertion, ExpectStatic, MatcherState } from "vitest2";
 export { assertType } from "vitest2";
+
+export { vi, vitest } from "vitest2";
