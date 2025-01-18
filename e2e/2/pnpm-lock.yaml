@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       vitest-types:
-        specifier: file:..
-        version: file:..
+        specifier: file:../..
+        version: file:../..
 
 packages:
 
-  vitest-types@file:..:
-    resolution: {directory: .., type: directory}
+  vitest-types@file:../..:
+    resolution: {directory: ../.., type: directory}
 
 snapshots:
 
-  vitest-types@file:..: {}
+  vitest-types@file:../..: {}

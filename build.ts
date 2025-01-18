@@ -14,27 +14,41 @@ import { cloneDeep, defaultsDeep } from "lodash-es";
 const rootRequire = createRequire(import.meta.url);
 const MODULE_NAME_LI = JSON.stringify("vitest");
 
-bundle({
-  entry: "./src/2/vitest.d.ts",
-  output: "./dist/2/vitest.d.ts",
-  bundledPackages: [
-    "vitest",
-    "@vitest/expect",
-    "@vitest/runner",
-    "@vitest/utils",
-    "@vitest/spy",
-    "expect-type",
-    "tinybench",
-    "@vitest/snapshot",
-    "tinyrainbow",
-    "@vitest/pretty-format",
-  ],
-});
+const configs = [
+  {
+    name: "2",
+    module: "vitest2",
+  },
+  {
+    name: "3",
+    module: "vitest3",
+  },
+];
 
-cpSync(resolveChai("vitest2"), "./dist/2/chai.d.cts");
-writeFileSync(
-  "./dist/2/globals.d.ts",
-  `
+for (const c of configs) {
+  const srcDir = `./src/${c.name}`;
+  const distDir = `./dist/${c.name}`;
+  bundle({
+    entry: `${srcDir}/vitest.d.ts`,
+    output: `${distDir}/vitest.d.ts`,
+    bundledPackages: [
+      "vitest",
+      "@vitest/expect",
+      "@vitest/runner",
+      "@vitest/utils",
+      "@vitest/spy",
+      "expect-type",
+      "tinybench",
+      "@vitest/snapshot",
+      "tinyrainbow",
+      "@vitest/pretty-format",
+    ],
+  });
+
+  cpSync(resolveChai(c.module), `${distDir}/chai.d.cts`);
+  writeFileSync(
+    `${distDir}/globals.d.ts`,
+    `
 declare global {
   const suite: typeof import(${MODULE_NAME_LI})['suite']
   const test: typeof import(${MODULE_NAME_LI})['test']
@@ -55,17 +69,20 @@ declare global {
 }
 export {}
 `.trim() + "\n"
-);
+  );
 
-writeFileSync(
-  "./dist/2.d.ts",
-  `
+  console.log(`./dist/${c.name}.d.ts`);
+  writeFileSync(
+    `./dist/${c.name}.d.ts`,
+    `
 declare module ${MODULE_NAME_LI} {
-  export * from "vitest-types/2/vitest";
+  export * from "vitest-types/${c.name}/vitest";
 }
 
 `.trim() + ""
-);
+  );
+}
+
 function resolveChai(pkg: string, chaiRequire = "@vitest/expect/dist/chai.d.cts") {
   const vitestRequire = createRequire(new URL(rootRequire.resolve(pkg), import.meta.url));
   return vitestRequire.resolve(chaiRequire);

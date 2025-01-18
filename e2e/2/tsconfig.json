@@ -10,7 +10,7 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "target": "ES2022",
-    "types": ["vitest-types/globals", "vitest-types"]
+    "types": ["vitest-types/2/globals", "vitest-types/2"]
   },
   "include": ["test.ts"]
 }

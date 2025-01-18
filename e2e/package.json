@@ -1,5 +1,0 @@
-{
-  "dependencies": {
-    "vitest-types": "file:.."
-  }
-}
