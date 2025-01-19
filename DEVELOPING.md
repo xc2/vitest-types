@@ -1,8 +1,8 @@
 ## Patches
 
-### patches/vitest@2.1.8.patch
+### patches/vitest@2.1.8.patch, patches/vitest@3.0.2.patch
 
-Patches are applied to `vitest@2.1.8` package as `@microsoft/api-extractor` doesn't work well with the code below:
+Patches are applied to `vitest@*` package as `@microsoft/api-extractor` doesn't work well with the code below:
 
 ```ts
 export { Foo } from 'foo';

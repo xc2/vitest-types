@@ -2,6 +2,9 @@
 
 This package allows you to use `import { expect, test, ... } from "vitest"` statements in your ts test files without needing to add `vitest` to your `dependencies` or `devDependencies` lists.
 
+Supported versions:
+- vitest 2.x
+- vitest 3.x
 
 > [!NOTE]
 > Vitest Node APIs are not included in this package. You will still need to install `vitest` to use them. For example:
@@ -15,12 +18,26 @@ This package allows you to use `import { expect, test, ... } from "vitest"` stat
 pnpm/yarn/npm add --save-dev vitest-types
 ```
 
-Then add `vitest-types` to `compilerOptions.types` list in the `tsconfig.json`. For example:
+### vitest 2.x
+
+Then add `vitest-types/2` to `compilerOptions.types` list in the `tsconfig.json`. For example:
 
 ```json
 {
   "compilerOptions": {
-    "types": ["vitest-types"]
+    "types": ["vitest-types/2"]
+  }
+}
+```
+
+### vitest 3.x
+
+Then add `vitest-types/3` to `compilerOptions.types` list in the `tsconfig.json`. For example:
+
+```json
+{
+  "compilerOptions": {
+    "types": ["vitest-types/3"]
   }
 }
 ```
@@ -38,12 +55,12 @@ test('foo', () => {
 
 ## APIs Global Injection
 
-When you're running vitest with apis global injection(`--globals`), you should also add `vitest-types/globals` to the `compilerOptions.types` list. For example:
+When you're running vitest with apis global injection(`--globals`), you should also add `vitest-types/2/globals`/`vitest-types/3/globals` to the `compilerOptions.types` list. For example:
 
 ```json
 {
   "compilerOptions": {
-    "types": ["vitest-types/globals"]
+    "types": ["vitest-types/2/globals"]
   }
 }
 ```

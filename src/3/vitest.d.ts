@@ -35,21 +35,39 @@ export {
   onTestFinished,
   suite,
   test,
-} from "vitest2";
-export { AfterSuiteRunMeta, ModuleCache } from "vitest2";
+} from "vitest3";
+export { AfterSuiteRunMeta, ModuleCache } from "vitest3";
 export {
   ContextRPC,
   ContextTestEnvironment,
   RunnerRPC,
   RuntimeRPC,
   // WorkerGlobalState,
-} from "vitest2";
+} from "vitest3";
+export { RuntimeConfig, SerializedCoverageConfig } from "vitest3";
 export {
   Assertion,
   AsymmetricMatchersContaining,
   ExpectStatic,
   JestAssertion,
-} from "vitest2";
+} from "vitest3";
+export {
+  Mock,
+  MockContext,
+  MockInstance,
+  Mocked,
+  MockedClass,
+  MockedFunction,
+  MockedObject,
+} from "vitest3";
+export { bench } from "vitest3";
+export {
+  BenchFunction,
+  Benchmark,
+  BenchmarkAPI,
+  BenchmarkResult,
+} from "vitest3";
+export { ExpectTypeOf, expectTypeOf } from "vitest3";
 export {
   SnapshotData,
   SnapshotMatchOptions,
@@ -59,41 +77,23 @@ export {
   SnapshotSummary,
   SnapshotUpdateState,
   UncheckedSnapshot,
-} from "vitest2";
-export {
-  BenchFunction,
-  Benchmark,
-  BenchmarkAPI,
-} from "vitest2";
-export { RuntimeConfig, SerializedCoverageConfig } from "vitest2";
-export {
-  Mock,
-  MockContext,
-  MockInstance,
-  Mocked,
-  MockedClass,
-  MockedFunction,
-  MockedObject,
-} from "vitest2";
-export { bench } from "vitest2";
-export { ExpectTypeOf, expectTypeOf } from "vitest2";
-export { ErrorWithDiff, ParsedStack, SerializedError, TestError } from "vitest2";
-export { DiffOptions } from "vitest2";
-export { chai } from "vitest2";
-export { assert, should } from "vitest2";
+} from "vitest3";
+export { ErrorWithDiff, ParsedStack, SerializedError, TestError } from "vitest3";
+export { DiffOptions } from "vitest3";
+export { chai } from "vitest3";
+export { assert, should } from "vitest3";
 export {
   BenchFactory,
   BenchOptions,
   BenchTask,
   BenchTaskResult,
-} from "vitest2";
+} from "vitest3";
 
 export {
   ArgumentsType,
   Arrayable,
   AssertType,
   Awaitable,
-  BenchmarkResult,
   BrowserUI,
   Constructable,
   Custom,
@@ -132,4 +132,4 @@ export {
   runOnce,
   vi,
   vitest,
-} from "vitest2";
+} from "vitest3";

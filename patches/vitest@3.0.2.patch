@@ -1,10 +1,10 @@
-diff --git a/dist/index.d.ts b/dist/index.d.ts
-index 2bbe68cce613978444bd87c45ccaddd50031e06b..77206f3b5efee6805176cab5e958a5951d5481d3 100644
---- a/dist/index.d.ts
-+++ b/dist/index.d.ts
-@@ -40,106 +40,6 @@ import '@vitest/runner/utils';
- import '@vitest/snapshot/environment';
- import '@vitest/mocker';
+diff --git a/dist/chunks/global.CnI8_G5V.d.ts b/dist/chunks/global.CnI8_G5V.d.ts
+index 431316243b0c3b871536f8d18db8614c2de8801c..84fc72cf89901f3381ccb5a09680a202abc60b37 100644
+--- a/dist/chunks/global.CnI8_G5V.d.ts
++++ b/dist/chunks/global.CnI8_G5V.d.ts
+@@ -30,104 +30,4 @@ type Context = RootAndTarget & {
+     lastActivePath?: string;
+ };
  
 -declare global {
 -    namespace Chai {
@@ -30,7 +30,7 @@ index 2bbe68cce613978444bd87c45ccaddd50031e06b..77206f3b5efee6805176cab5e958a595
 -}
 -declare module '@vitest/expect' {
 -    interface MatcherState {
--        environment: VitestEnvironment$1;
+-        environment: string;
 -        snapshotState: SnapshotState;
 -    }
 -    interface ExpectPollOptions {
@@ -106,6 +106,4 @@ index 2bbe68cce613978444bd87c45ccaddd50031e06b..77206f3b5efee6805176cab5e958a595
 -    }
 -}
 -
- interface SourceMap {
-     file: string;
-     mappings: string;
+ export type { CollectLineNumbers as C, RawErrsMap as R, TscErrorInfo as T, CollectLines as a, RootAndTarget as b, Context as c };
