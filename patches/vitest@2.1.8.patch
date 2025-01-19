@@ -1,72 +1,111 @@
 diff --git a/dist/index.d.ts b/dist/index.d.ts
-index 2bbe68cce613978444bd87c45ccaddd50031e06b..39554be16fef132817d567646769c8c43bd3fe78 100644
+index 2bbe68cce613978444bd87c45ccaddd50031e06b..77206f3b5efee6805176cab5e958a5951d5481d3 100644
 --- a/dist/index.d.ts
 +++ b/dist/index.d.ts
-@@ -7,8 +7,9 @@ export { A as AfterSuiteRunMeta, g as ModuleCache } from './chunks/environment.L
- import { a as BirpcReturn, b as WorkerRPC$1 } from './chunks/worker.tN5KGIih.js';
- export { C as ContextRPC, d as ContextTestEnvironment, e as ResolveIdFunction, c as RunnerRPC, R as RuntimeRPC, W as WorkerGlobalState } from './chunks/worker.tN5KGIih.js';
- import './chunks/vite.C-N5BBZe.js';
--import { PromisifyAssertion, Tester, ExpectStatic } from '@vitest/expect';
--export { Assertion, AsymmetricMatchersContaining, ExpectPollOptions, ExpectStatic, JestAssertion } from '@vitest/expect';
-+import { PromisifyAssertion, Tester } from '@vitest/expect';
-+export { AsymmetricMatchersContaining, JestAssertion } from '@vitest/expect';
-+import { Assertion as Assertion$1, MatcherState as MatcherState$1, ExpectStatic as ExpectStatic$1 } from '@vitest/expect'
- import { Plugin } from '@vitest/pretty-format';
- import { SnapshotState } from '@vitest/snapshot';
- export { SnapshotData, SnapshotMatchOptions, SnapshotResult, SnapshotSerializer, SnapshotStateOptions, SnapshotSummary, SnapshotUpdateState, UncheckedSnapshot } from '@vitest/snapshot';
-@@ -62,8 +63,9 @@ interface InlineSnapshotMatcher<T> {
-     }>(properties: Partial<U>, snapshot?: string, message?: string): void;
-     (message?: string): void;
- }
+@@ -40,106 +40,6 @@ import '@vitest/runner/utils';
+ import '@vitest/snapshot/environment';
+ import '@vitest/mocker';
+ 
+-declare global {
+-    namespace Chai {
+-        interface Assertion {
+-            containSubset: (expected: any) => Assertion;
+-        }
+-        interface Assert {
+-            containSubset: (val: any, exp: any, msg?: string) => void;
+-        }
+-    }
+-}
+-interface SnapshotMatcher<T> {
+-    <U extends {
+-        [P in keyof T]: any;
+-    }>(snapshot: Partial<U>, message?: string): void;
+-    (message?: string): void;
+-}
+-interface InlineSnapshotMatcher<T> {
+-    <U extends {
+-        [P in keyof T]: any;
+-    }>(properties: Partial<U>, snapshot?: string, message?: string): void;
+-    (message?: string): void;
+-}
 -declare module '@vitest/expect' {
 -    interface MatcherState {
-+
-+// declare module '@vitest/expect' {
-+    interface MatcherState extends MatcherState$1 {
-         environment: VitestEnvironment$1;
-         snapshotState: SnapshotState;
-     }
-@@ -72,7 +74,8 @@ declare module '@vitest/expect' {
-         timeout?: number;
-         message?: string;
-     }
+-        environment: VitestEnvironment$1;
+-        snapshotState: SnapshotState;
+-    }
+-    interface ExpectPollOptions {
+-        interval?: number;
+-        timeout?: number;
+-        message?: string;
+-    }
 -    interface ExpectStatic {
-+    interface ExpectStatic extends ExpectStatic$1 {
-+        <T>(actual: T, message?: string): Assertion<T>;
-         unreachable: (message?: string) => never;
-         soft: <T>(actual: T, message?: string) => Assertion<T>;
-         poll: <T>(actual: () => T, options?: ExpectPollOptions) => PromisifyAssertion<Awaited<T>>;
-@@ -81,7 +84,7 @@ declare module '@vitest/expect' {
-         hasAssertions: () => void;
-         addSnapshotSerializer: (plugin: Plugin) => void;
-     }
+-        unreachable: (message?: string) => never;
+-        soft: <T>(actual: T, message?: string) => Assertion<T>;
+-        poll: <T>(actual: () => T, options?: ExpectPollOptions) => PromisifyAssertion<Awaited<T>>;
+-        addEqualityTesters: (testers: Array<Tester>) => void;
+-        assertions: (expected: number) => void;
+-        hasAssertions: () => void;
+-        addSnapshotSerializer: (plugin: Plugin) => void;
+-    }
 -    interface Assertion<T> {
-+    interface Assertion<T> extends Assertion$1<T> {
-         matchSnapshot: SnapshotMatcher<T>;
-         toMatchSnapshot: SnapshotMatcher<T>;
-         toMatchInlineSnapshot: InlineSnapshotMatcher<T>;
-@@ -118,8 +121,8 @@ declare module '@vitest/expect' {
-          */
-         toMatchFileSnapshot: (filepath: string, message?: string) => Promise<void>;
-     }
+-        matchSnapshot: SnapshotMatcher<T>;
+-        toMatchSnapshot: SnapshotMatcher<T>;
+-        toMatchInlineSnapshot: InlineSnapshotMatcher<T>;
+-        /**
+-         * Checks that an error thrown by a function matches a previously recorded snapshot.
+-         *
+-         * @param message - Optional custom error message.
+-         *
+-         * @example
+-         * expect(functionWithError).toThrowErrorMatchingSnapshot();
+-         */
+-        toThrowErrorMatchingSnapshot: (message?: string) => void;
+-        /**
+-         * Checks that an error thrown by a function matches an inline snapshot within the test file.
+-         * Useful for keeping snapshots close to the test code.
+-         *
+-         * @param snapshot - Optional inline snapshot string to match.
+-         * @param message - Optional custom error message.
+-         *
+-         * @example
+-         * const throwError = () => { throw new Error('Error occurred') };
+-         * expect(throwError).toThrowErrorMatchingInlineSnapshot(`"Error occurred"`);
+-         */
+-        toThrowErrorMatchingInlineSnapshot: (snapshot?: string, message?: string) => void;
+-        /**
+-         * Compares the received value to a snapshot saved in a specified file.
+-         * Useful for cases where snapshot content is large or needs to be shared across tests.
+-         *
+-         * @param filepath - Path to the snapshot file.
+-         * @param message - Optional custom error message.
+-         *
+-         * @example
+-         * await expect(largeData).toMatchFileSnapshot('path/to/snapshot.json');
+-         */
+-        toMatchFileSnapshot: (filepath: string, message?: string) => Promise<void>;
+-    }
 -}
 -declare module '@vitest/runner' {
-+// }
-+// declare module '@vitest/runner' {
-     interface TestContext {
-         expect: ExpectStatic;
-     }
-@@ -138,7 +141,7 @@ declare module '@vitest/runner' {
-     interface TaskResult {
-         benchmark?: BenchmarkResult;
-     }
+-    interface TestContext {
+-        expect: ExpectStatic;
+-    }
+-    interface TaskMeta {
+-        typecheck?: boolean;
+-        benchmark?: boolean;
+-        failScreenshotPath?: string;
+-    }
+-    interface File {
+-        prepareDuration?: number;
+-        environmentLoad?: number;
+-    }
+-    interface TaskBase {
+-        logs?: UserConsoleLog[];
+-    }
+-    interface TaskResult {
+-        benchmark?: BenchmarkResult;
+-    }
 -}
-+// }
- 
+-
  interface SourceMap {
      file: string;
-@@ -713,3 +716,4 @@ type SerializableSpec = SerializedTestSpecification;
- type BenchmarkUserOptions = BenchmarkUserOptions$1;
- 
- export { type ApiConfig, type ArgumentsType, type Arrayable, type AssertType, type Awaitable, type BaseCoverageOptions, BenchmarkResult, type BenchmarkUserOptions, type BrowserConfigOptions, type BrowserScript, type BrowserUI, type BuiltinEnvironment, type CSSModuleScopeStrategy, type CollectLineNumbers, type CollectLines, type Constructable, type Context, type CoverageIstanbulOptions, type CoverageOptions, type CoverageProvider, type CoverageProviderModule, type CoverageReporter, type CoverageV8Options, type Custom, type CustomProviderOptions, type DepsOptimizationOptions, type DoneCallback, type Environment, type EnvironmentOptions, type EnvironmentReturn, type File, type HappyDOMOptions, type InlineConfig, type JSDOMOptions, ModuleGraphData, type MutableArray, type Nullable, type OnServerRestartHandler, type Pool, type PoolOptions, type ProjectConfig, ProvidedContext, type RawErrsMap, type ReportContext, type Reporter, type ResolvedConfig, type ResolvedCoverageOptions, type ResolvedTestEnvironment, type RootAndTarget, type RuntimeContext, type SequenceHooks, type SequenceSetupFiles, type SerializableSpec, SerializedConfig, SerializedTestSpecification, type Suite, type SuiteHooks, type Task, type TaskBase, type TaskResult, type TaskResultPack, type Test, type TransformModePatterns, type TransformResultWithSource, type TscErrorInfo, type TypecheckConfig, type UserConfig, UserConsoleLog, type UserWorkspaceConfig, type Vitest, type VitestEnvironment, type VitestRunMode, type VitestUtils, type VmEnvironmentReturn, type WebSocketEvents, type WebSocketHandlers, type WebSocketRPC, type WorkerContext, type WorkerRPC, assertType, createExpect, globalExpect as expect, getRunningMode, inject, isFirstRun, isWatchMode, runOnce, vi, vitest };
-+export { Assertion, ExpectStatic, MatcherState }
+     mappings: string;

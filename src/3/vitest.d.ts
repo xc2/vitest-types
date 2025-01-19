@@ -1,7 +1,3 @@
-import { PromisifyAssertion, Tester } from "@vitest/expect";
-import { Plugin } from "@vitest/pretty-format";
-import { SnapshotState } from "@vitest/snapshot";
-
 export {
   CancelReason,
   ExtendedContext,
@@ -44,16 +40,14 @@ export { AfterSuiteRunMeta, ModuleCache } from "vitest3";
 export {
   ContextRPC,
   ContextTestEnvironment,
-  ResolveIdFunction,
   RunnerRPC,
   RuntimeRPC,
-  WorkerGlobalState,
+  // WorkerGlobalState,
 } from "vitest3";
 export { RuntimeConfig, SerializedCoverageConfig } from "vitest3";
 export {
   Assertion,
   AsymmetricMatchersContaining,
-  // ExpectPollOptions,
   ExpectStatic,
   JestAssertion,
 } from "vitest3";
@@ -86,6 +80,7 @@ export {
 } from "vitest3";
 export { ErrorWithDiff, ParsedStack, SerializedError, TestError } from "vitest3";
 export { DiffOptions } from "vitest3";
+export { chai } from "vitest3";
 export { assert, should } from "vitest3";
 export {
   BenchFactory,
@@ -93,57 +88,23 @@ export {
   BenchTask,
   BenchTaskResult,
 } from "vitest3";
+
 export {
-  ApiConfig,
   ArgumentsType,
   Arrayable,
   AssertType,
   Awaitable,
-  BaseCoverageOptions,
-  BenchmarkUserOptions,
-  BrowserConfigOptions,
-  BrowserScript,
   BrowserUI,
-  BuiltinEnvironment,
-  CSSModuleScopeStrategy,
-  CollectLineNumbers,
-  CollectLines,
   Constructable,
-  Context,
-  CoverageIstanbulOptions,
-  CoverageOptions,
-  CoverageProvider,
-  CoverageProviderModule,
-  CoverageReporter,
-  CoverageV8Options,
   Custom,
-  CustomProviderOptions,
-  DepsOptimizationOptions,
   DoneCallback,
-  Environment,
-  EnvironmentOptions,
-  EnvironmentReturn,
   File,
-  HappyDOMOptions,
-  InlineConfig,
-  JSDOMOptions,
   ModuleGraphData,
   MutableArray,
   Nullable,
-  Pool,
-  PoolOptions,
-  ProjectConfig,
   ProvidedContext,
-  RawErrsMap,
-  ReportContext,
-  Reporter,
-  ResolvedConfig,
-  ResolvedCoverageOptions,
   ResolvedTestEnvironment,
-  RootAndTarget,
   RuntimeContext,
-  SequenceHooks,
-  SequenceSetupFiles,
   SerializableSpec,
   SerializedConfig,
   SerializedTestSpecification,
@@ -154,23 +115,13 @@ export {
   TaskResult,
   TaskResultPack,
   Test,
-  TransformModePatterns,
   TransformResultWithSource,
-  TscErrorInfo,
-  TypecheckConfig,
-  UserConfig,
   UserConsoleLog,
-  UserWorkspaceConfig,
-  Vitest,
   VitestEnvironment,
-  VitestRunMode,
   VitestUtils,
-  VmEnvironmentReturn,
   WebSocketEvents,
   WebSocketHandlers,
   WebSocketRPC,
-  WorkerContext,
-  WorkerRPC,
   assertType,
   createExpect,
   expect,

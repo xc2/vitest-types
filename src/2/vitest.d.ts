@@ -1,6 +1,8 @@
 export {
   CancelReason,
   ExtendedContext,
+  HookCleanupCallback,
+  HookListener,
   OnTestFailedHandler,
   OnTestFinishedHandler,
   RunMode,
@@ -34,8 +36,20 @@ export {
   suite,
   test,
 } from "vitest2";
-export { AfterSuiteRunMeta } from "vitest2";
-export { AsymmetricMatchersContaining, JestAssertion } from "vitest2";
+export { AfterSuiteRunMeta, ModuleCache } from "vitest2";
+export {
+  ContextRPC,
+  ContextTestEnvironment,
+  RunnerRPC,
+  RuntimeRPC,
+  // WorkerGlobalState,
+} from "vitest2";
+export {
+  Assertion,
+  AsymmetricMatchersContaining,
+  ExpectStatic,
+  JestAssertion,
+} from "vitest2";
 export {
   SnapshotData,
   SnapshotMatchOptions,
@@ -46,7 +60,11 @@ export {
   SnapshotUpdateState,
   UncheckedSnapshot,
 } from "vitest2";
-export { BenchFunction, Benchmark, BenchmarkAPI } from "vitest2";
+export {
+  BenchFunction,
+  Benchmark,
+  BenchmarkAPI,
+} from "vitest2";
 export { RuntimeConfig, SerializedCoverageConfig } from "vitest2";
 export {
   Mock,
@@ -63,45 +81,55 @@ export { ErrorWithDiff, ParsedStack, SerializedError, TestError } from "vitest2"
 export { DiffOptions } from "vitest2";
 export { chai } from "vitest2";
 export { assert, should } from "vitest2";
-export { BenchFactory, BenchOptions, BenchTask, BenchTaskResult } from "vitest2";
-export { expect, Assertion, ExpectStatic, MatcherState } from "vitest2";
-export { assertType } from "vitest2";
-
-export { vi, vitest } from "vitest2";
+export {
+  BenchFactory,
+  BenchOptions,
+  BenchTask,
+  BenchTaskResult,
+} from "vitest2";
 
 export {
+  ArgumentsType,
+  Arrayable,
   AssertType,
+  Awaitable,
   BenchmarkResult,
   BrowserUI,
+  Constructable,
+  Custom,
+  DoneCallback,
   File,
   ModuleGraphData,
+  MutableArray,
+  Nullable,
   ProvidedContext,
+  ResolvedTestEnvironment,
+  RuntimeContext,
+  SerializableSpec,
   SerializedConfig,
   SerializedTestSpecification,
+  Suite,
+  SuiteHooks,
+  Task,
   TaskBase,
   TaskResult,
+  TaskResultPack,
+  Test,
   TransformResultWithSource,
   UserConsoleLog,
+  VitestEnvironment,
   VitestUtils,
   WebSocketEvents,
   WebSocketHandlers,
   WebSocketRPC,
+  assertType,
   createExpect,
+  expect,
   getRunningMode,
   inject,
   isFirstRun,
   isWatchMode,
   runOnce,
-} from "vitest2";
-export {
-  TaskResultPack,
-  Suite,
-  Test,
-  Custom,
-  Task,
-  DoneCallback,
-  RuntimeContext,
-  SuiteHooks,
-  SequenceHooks,
-  SequenceSetupFiles,
+  vi,
+  vitest,
 } from "vitest2";

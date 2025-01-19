@@ -1,4 +1,6 @@
-import { cpSync, writeFileSync } from "node:fs";
+import { readFileSync } from "fs";
+import { appendFileSync, cpSync, existsSync, writeFileSync } from "node:fs";
+import { appendFile, readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import * as Path from "node:path";
 import {
@@ -46,6 +48,13 @@ for (const c of configs) {
   });
 
   cpSync(resolveChai(c.module), `${distDir}/chai.d.cts`);
+  const vitestDts = `${distDir}/vitest.d.ts`;
+  const vitestContent = Buffer.concat(
+    [`${srcDir}/components/header.ts`, vitestDts, `${srcDir}/components/footer.ts`].map((v) =>
+      existsSync(v) ? readFileSync(v) : new Uint8Array()
+    )
+  );
+  writeFileSync(vitestDts, vitestContent);
   writeFileSync(
     `${distDir}/globals.d.ts`,
     `
@@ -71,7 +80,6 @@ export {}
 `.trim() + "\n"
   );
 
-  console.log(`./dist/${c.name}.d.ts`);
   writeFileSync(
     `./dist/${c.name}.d.ts`,
     `
