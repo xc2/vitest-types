@@ -1,0 +1,53 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      vitest-types:
+        specifier: file:..
+        version: file:..
+    devDependencies:
+      ts51:
+        specifier: npm:typescript@5.1
+        version: typescript@5.1.6
+      ts55:
+        specifier: npm:typescript@5.5
+        version: typescript@5.5.4
+      ts57:
+        specifier: npm:typescript@5.7
+        version: typescript@5.7.3
+
+packages:
+
+  typescript@5.1.6:
+    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.5.4:
+    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.7.3:
+    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  vitest-types@file:..:
+    resolution: {directory: .., type: directory}
+
+snapshots:
+
+  typescript@5.1.6: {}
+
+  typescript@5.5.4: {}
+
+  typescript@5.7.3: {}
+
+  vitest-types@file:..: {}
